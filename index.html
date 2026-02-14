@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Tarjeta San Valentín</title>
+<title>Para Andrea ❤️</title>
 
 <style>
     body {
@@ -54,42 +54,87 @@
         align-items: center;
     }
 
+    /* Tronco */
     .trunk {
-        width: 40px;
-        height: 160px;
-        background: #6d4c41;
         position: absolute;
         bottom: 40px;
+        width: 40px;
+        height: 140px;
+        background: #6d4c41;
         border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    .heart {
-        position: relative;
-        width: 220px;
-        height: 200px;
-        transform: rotate(-45deg);
+    /* Nombre */
+    .name {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-size: 12px;
+        color: #fff;
+        opacity: 0.85;
+        letter-spacing: 2px;
     }
 
-    .heart:before,
-    .heart:after {
+    /* Pino */
+    .pine {
+        position: absolute;
+        bottom: 160px;
+        width: 0;
+        height: 0;
+        border-left: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-bottom: 160px solid #ec407a;
+        animation: sway 4s ease-in-out infinite;
+    }
+
+    .pine:before {
         content: "";
         position: absolute;
-        width: 220px;
-        height: 220px;
-        background: #f06292;
+        top: 45px;
+        left: -75px;
+        width: 0;
+        height: 0;
+        border-left: 75px solid transparent;
+        border-right: 75px solid transparent;
+        border-bottom: 120px solid #f06292;
+    }
+
+    .pine:after {
+        content: "";
+        position: absolute;
+        top: 90px;
+        left: -55px;
+        width: 0;
+        height: 0;
+        border-left: 55px solid transparent;
+        border-right: 55px solid transparent;
+        border-bottom: 95px solid #f48fb1;
+    }
+
+    @keyframes sway {
+        0% { transform: rotate(-1deg); }
+        50% { transform: rotate(1deg); }
+        100% { transform: rotate(-1deg); }
+    }
+
+    /* Luces */
+    .lights span {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: white;
         border-radius: 50%;
+        animation: blink 1.5s infinite alternate;
     }
 
-    .heart:before {
-        top: -110px;
-        left: 0;
+    @keyframes blink {
+        from { opacity: 0.2; }
+        to { opacity: 1; }
     }
 
-    .heart:after {
-        left: 110px;
-        top: 0;
-    }
-
+    /* Pétalos */
     .petal {
         position: absolute;
         width: 10px;
@@ -110,6 +155,7 @@
             opacity: 0;
         }
     }
+
 </style>
 </head>
 
@@ -125,8 +171,7 @@
         </p>
 
         <p>
-            Este texto es solo un ejemplo de demostración
-            y no refleja sentimientos reales.
+            Contigo todo tiene sentido, incluso el tiempo.
         </p>
 
         <div class="counter">
@@ -136,13 +181,19 @@
     </div>
 
     <div class="tree">
-        <div class="heart"></div>
-        <div class="trunk"></div>
+        <div class="pine"></div>
+        <div class="lights"></div>
+        <div class="trunk">
+            <span class="name">ANDREA</span>
+        </div>
     </div>
 </div>
 
 <script>
-    // CONFIGURA AQUÍ LA FECHA DE INICIO
+    /* =========================
+       CONTADOR
+    ========================== */
+
     const startDate = new Date("2025-07-24T18:00:00");
 
     function updateCounter() {
@@ -163,7 +214,54 @@
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // PÉTALOS
+    /* =========================
+       LUCES
+    ========================== */
+
+    const lightsContainer = document.querySelector(".lights");
+
+    for (let i = 0; i < 25; i++) {
+        const light = document.createElement("span");
+        light.style.left = (Math.random() * 180 - 90) + "px";
+        light.style.top = (Math.random() * 140) + "px";
+        light.style.animationDelay = (Math.random() * 2) + "s";
+        lightsContainer.appendChild(light);
+    }
+
+    /* =========================
+       CORAZONES
+    ========================== */
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.innerHTML = "❤";
+        heart.style.position = "absolute";
+        heart.style.color = "#f06292";
+        heart.style.fontSize = (12 + Math.random() * 10) + "px";
+        heart.style.left = (window.innerWidth / 2 + Math.random() * 200 - 100) + "px";
+        heart.style.top = "400px";
+        heart.style.opacity = 0.8;
+        heart.style.animation = "floatUp 4s linear";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+    }
+
+    setInterval(createHeart, 500);
+
+    const style = document.createElement("style");
+    style.innerHTML = `
+    @keyframes floatUp {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-300px); opacity: 0; }
+    }`;
+    document.head.appendChild(style);
+
+    /* =========================
+       PÉTALOS
+    ========================== */
+
     function createPetal() {
         const petal = document.createElement("div");
         petal.className = "petal";
@@ -171,9 +269,7 @@
         petal.style.animationDuration = (3 + Math.random() * 5) + "s";
         document.body.appendChild(petal);
 
-        setTimeout(() => {
-            petal.remove();
-        }, 8000);
+        setTimeout(() => petal.remove(), 8000);
     }
 
     setInterval(createPetal, 300);
