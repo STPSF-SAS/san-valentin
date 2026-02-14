@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tarjeta San Valentín</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(180deg, #fce4ec, #f8bbd0);
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .card {
+        position: relative;
+        width: 90%;
+        max-width: 900px;
+        height: 500px;
+        background: #fff3e0;
+        margin: 40px auto;
+        border-radius: 12px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        display: flex;
+        padding: 30px;
+    }
+
+    .text {
+        width: 50%;
+        color: #5d4037;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .text h3 {
+        margin-top: 0;
+    }
+
+    .counter {
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+
+    .tree {
+        position: relative;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .trunk {
+        width: 40px;
+        height: 160px;
+        background: #6d4c41;
+        position: absolute;
+        bottom: 40px;
+        border-radius: 8px;
+    }
+
+    .heart {
+        position: relative;
+        width: 220px;
+        height: 200px;
+        transform: rotate(-45deg);
+    }
+
+    .heart:before,
+    .heart:after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        background: #f06292;
+        border-radius: 50%;
+    }
+
+    .heart:before {
+        top: -110px;
+        left: 0;
+    }
+
+    .heart:after {
+        left: 110px;
+        top: 0;
+    }
+
+    .petal {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: pink;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        from {
+            transform: translateY(-10px) rotate(0deg);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(600px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="text">
+        <h3>Para el amor de mi vida:</h3>
+
+        <p>
+            Si pudiera elegir un lugar seguro, sería a tu lado.<br>
+            Cuanto más tiempo estoy contigo, más te amo.
+        </p>
+
+        <p>
+            Este texto es solo un ejemplo de demostración
+            y no refleja sentimientos reales.
+        </p>
+
+        <div class="counter">
+            Mi amor por ti comenzó hace...<br>
+            <span id="time"></span>
+        </div>
+    </div>
+
+    <div class="tree">
+        <div class="heart"></div>
+        <div class="trunk"></div>
+    </div>
+</div>
+
+<script>
+    // CONFIGURA AQUÍ LA FECHA DE INICIO
+    const startDate = new Date("2025-07-24T18:00:00");
+
+    function updateCounter() {
+        const now = new Date();
+        let diff = Math.floor((now - startDate) / 1000);
+
+        const days = Math.floor(diff / 86400);
+        diff %= 86400;
+        const hours = Math.floor(diff / 3600);
+        diff %= 3600;
+        const minutes = Math.floor(diff / 60);
+        const seconds = diff % 60;
+
+        document.getElementById("time").innerHTML =
+            `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
+    }
+
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // PÉTALOS
+    function createPetal() {
+        const petal = document.createElement("div");
+        petal.className = "petal";
+        petal.style.left = Math.random() * window.innerWidth + "px";
+        petal.style.animationDuration = (3 + Math.random() * 5) + "s";
+        document.body.appendChild(petal);
+
+        setTimeout(() => {
+            petal.remove();
+        }, 8000);
+    }
+
+    setInterval(createPetal, 300);
+</script>
+
+</body>
+</html>
